@@ -1,0 +1,39 @@
+# Byte-compiled / optimised
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Editable installs / Hatch / Poetry
+.venv/
+venv/
+.env
+.envrc
+
+# Test & type-check caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+
+# Editors
+.vscode/
+.idea/
+
+# MkDocs
+site/
+
+# OS
+.DS_Store

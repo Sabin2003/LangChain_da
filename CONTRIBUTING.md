@@ -1,40 +1,54 @@
-# Contributing to Daedalus
+# Contributing to langchain-rabbitmq
 
-First off, thank you for contributing to Daedalus. This is a proprietary monorepo. Access is strictly restricted to authorized core team members.
+Thanks for taking the time to contribute!
 
-To maintain the highest software engineering standards and ensure our Jenkins CI/CD pipelines run smoothly, please adhere to the following guidelines.
+## Development setup
 
-## 1. Branching Strategy (GitFlow)
+```bash
+git clone https://github.com/Sabin2003/LangChain_da.git
+cd LangChain_da
+python -m venv .venv
+source .venv/bin/activate
+make install
+```
 
-We use a structured branching model:
+## Quality gates
 
-* `main` : Production-ready code. Do not push directly to this branch.
-* `develop` : Integration branch for upcoming releases.
-* `feature/<ticket-id>-<short-description>` : For new features (e.g., `feature/PB-051-auth-service`).
-* `fix/<ticket-id>-<short-description>` : For bug fixes.
+Every PR must pass:
 
-## 2. Commit Message Convention
+```bash
+make lint        # ruff
+make typecheck   # pyright --strict
+make security    # bandit
+make test        # unit tests with >90% coverage
+```
 
-We strictly follow [Conventional Commits](https://www.conventionalcommits.org/):
+Integration / E2E / load tests require Docker:
 
-* `feat:` A new feature.
-* `fix:` A bug fix.
-* `docs:` Documentation only changes.
-* `test:` Adding missing tests or correcting existing tests.
-* `chore:` Changes to the build process, CI/CD, or auxiliary tools.
+```bash
+make test-integration
+make test-e2e
+make test-load
+```
 
-*Example: `feat(procurement-agent): integrate LangChain sourcing logic`*
+## Code style
 
-## 3. Pull Request (PR) Process
+* Strict typing (`from __future__ import annotations`, no implicit `Any`).
+* Public APIs **must** have docstrings.
+* Pydantic v2 for every external schema.
+* No `TODO` comments in merged code — open an issue instead.
+* SemVer (`major.minor.patch`) — breaking changes bump the major.
 
-1. Push your feature branch to the repository.
-2. Open a Pull Request against the `develop` branch.
-3. Ensure your PR description links to the relevant Scrum Product Backlog ID.
-4. **Quality Gates:**
-   - Code must compile without warnings.
-   - **Test Coverage MUST be ≥ 80%** (Unit & Integration tests). Jenkins will automatically fail the build if this threshold is not met.
-5. Require at least one peer review approval before merging.
+## Pull request checklist
 
-## 4. Local Development
+- [ ] Tests added / updated.
+- [ ] Coverage stays above 90 %.
+- [ ] `CHANGELOG.md` updated under the *Unreleased* section.
+- [ ] `mkdocs build --strict` succeeds if documentation changed.
 
-Please refer to the `README.md` inside each specific microservice folder (`/services/*`) for language-specific setup instructions (Golang, FastAPI, Node.js).
+## Releasing
+
+1. Bump `__version__` in `src/langchain_rabbitmq/__init__.py`.
+2. Update `CHANGELOG.md` (move *Unreleased* items under a new dated version).
+3. Commit and push: `git tag vX.Y.Z && git push --tags`.
+4. The `release.yml` workflow publishes to PyPI via OIDC trusted publishing.
