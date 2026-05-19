@@ -1,0 +1,62 @@
+site_name: langchain-rabbitmq
+site_description: Production-grade RabbitMQ integration for LangChain.
+site_url: https://sabin2003.github.io/LangChain_da/
+repo_url: https://github.com/Sabin2003/LangChain_da
+repo_name: Sabin2003/LangChain_da
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: deep orange
+      accent: orange
+    - scheme: slate
+      primary: deep orange
+      accent: orange
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_signature_annotations: true
+            separate_signature: true
+            merge_init_into_class: true
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting started: getting_started.md
+  - Configuration: configuration.md
+  - Tools reference: tools.md
+  - Toolkit: toolkit.md
+  - Cookbooks:
+      - Basic agent: cookbooks/basic_agent.md
+      - Async agent: cookbooks/async_agent.md
+      - RPC: cookbooks/rpc.md
+      - Routing exchanges: cookbooks/routing.md
+  - API reference: api.md
+  - Changelog: changelog.md
